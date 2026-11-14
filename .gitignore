@@ -1,0 +1,10 @@
+# Build files
+*.exe
+*.o
+*.obj
+
+# IDE
+.vscode/
+
+# Temporary files
+*.tmp
