@@ -112,8 +112,14 @@ bool getContentLength(
     return true;
 }
 int main() {
+    Backend backend;
+
+    if (!backend.initialize()) {
+        cout << "Khong the khoi tao Database!" << endl;
+        return 1;
+    }
     WebServer server;
-    Router router;
+    Router router(backend);
     if (!server.start(8080)) {
         cout << "Khong the khoi dong Server!" << endl;
         return 1;

@@ -8,9 +8,7 @@
 #include <windows.h>
 #include <bcrypt.h>
 #pragma comment(lib, "bcrypt.lib")
-
 using nlohmann::json;
-
 static std::string makeToken() {
     static const char chars[] = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
     std::random_device rd;
@@ -23,7 +21,6 @@ static std::string makeToken() {
 Auth::Auth(Database& db) : database(db) {}
 
 std::string Auth::hashPassword(const std::string& password) const {
-    // Salt ngẫu nhiên 16 byte, sau đó băm SHA-256 bằng Windows CNG.
     unsigned char salt[16];
     if (BCryptGenRandom(nullptr, salt, sizeof(salt), BCRYPT_USE_SYSTEM_PREFERRED_RNG) != 0)
         throw std::runtime_error("Cannot generate password salt");
@@ -52,7 +49,7 @@ std::string Auth::hashPassword(const std::string& password) const {
 }
 
 static bool verifyPassword(const std::string& password, const std::string& stored) {
-    // Verify salt + SHA-256 theo đúng định dạng lưu trong DB.
+
     if (stored.rfind("sha256$",0) != 0) return false;
     auto sep = stored.find('$',7);
     if (sep == std::string::npos || sep-7 != 32 || stored.size()!=sep+1+64) return false;

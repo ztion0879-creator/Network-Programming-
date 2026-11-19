@@ -29,7 +29,7 @@ json FoodService::getFoods(const std::string& search) {
 json FoodService::addFood(const json& d) {
     std::string name=d.value("name",""), desc=d.value("description",""), image=d.value("image",""), category=d.value("category","");
     double price=d.value("price",0.0);
-    if(name.empty() || price<0) return {{"success",false},{"message","Tên món bắt buộc và giá không được âm."}};
+        if(name.empty() || price<0) return {{"success",false},{"message","Tên món bắt buộc và giá không được âm."}};
     sqlite3_stmt* s=nullptr;
     const char* sql="INSERT INTO Foods(name,description,price,image,category,available) VALUES(?,?,?,?,?,?)";
     if(sqlite3_prepare_v2(database.connection(),sql,-1,&s,nullptr)!=SQLITE_OK) return {{"success",false},{"message",sqlite3_errmsg(database.connection())}};

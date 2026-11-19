@@ -25,10 +25,12 @@ bool Database::execute(const std::string& sql) {
         sqlite3_free(message);
         return false;
     }
+     error.clear();
     return true;
 }
+
 bool Database::initialize() {
-    return execute(R"SQL(
+    if (!execute(R"SQL(
         PRAGMA foreign_keys = ON;
         CREATE TABLE IF NOT EXISTS Users (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -75,5 +77,23 @@ bool Database::initialize() {
         );
         CREATE INDEX IF NOT EXISTS idx_orders_user ON Orders(user_id);
         CREATE INDEX IF NOT EXISTS idx_order_details_order ON OrderDetails(order_id);
+    )SQL")) {
+        return false;
+    }
+    return execute(R"SQL(
+        INSERT INTO Foods
+            (name, description, price, image, category, available)
+        SELECT 'Pizza', 'Pizza phô mai', 100000, '', 'Fast Food', 1
+        WHERE NOT EXISTS (SELECT 1 FROM Foods)
+
+        UNION ALL
+
+        SELECT 'Burger', 'Burger bò phô mai', 50000, '', 'Fast Food', 1
+        WHERE NOT EXISTS (SELECT 1 FROM Foods)
+
+        UNION ALL
+
+        SELECT 'Chicken', 'Gà rán giòn', 80000, '', 'Fast Food', 1
+        WHERE NOT EXISTS (SELECT 1 FROM Foods);
     )SQL");
 }

@@ -6,6 +6,12 @@ HttpResponse::HttpResponse() {
     statusMessage = "OK";
     body = "";
     headers["Connection"] = "close";
+    headers["Access-Control-Allow-Origin"] = "*";
+    headers["Access-Control-Allow-Methods"] =
+        "GET, POST, PUT, DELETE, OPTIONS";
+    headers["Access-Control-Allow-Headers"] =
+        "Content-Type, Authorization";
+    headers["Access-Control-Max-Age"] = "86400";
 }
 void HttpResponse::setStatus(int code, const string& message) {
     statusCode = code;
@@ -19,7 +25,6 @@ void HttpResponse::setBody(const string& content) {
 }
 string HttpResponse::toString() {
     ostringstream response;
-
     response << version << " "
              << statusCode << " "
              << statusMessage << "\r\n";
