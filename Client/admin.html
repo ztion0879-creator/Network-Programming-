@@ -1,1 +1,93 @@
 
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quản trị - Foodie</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<header class="topbar">
+    <a class="brand" href="index.html">🍔 Foodie Admin</a>
+
+    <nav>
+        <a href="index.html">Trang chủ</a>
+        <a href="foods.html">Thực đơn</a>
+        <a class="active" href="admin.html">Quản trị</a>
+    </nav>
+
+    <div id="account-nav"></div>
+</header>
+
+<main class="section">
+    <p class="eyebrow">ADMIN DASHBOARD</p>
+    <h1>Quản lý hệ thống</h1>
+    <p class="muted">Quản lý món ăn và theo dõi đơn hàng của khách hàng.</p>
+
+    <section class="section">
+        <h2>Quản lý món ăn</h2>
+
+        <form id="food-form" class="auth-card">
+            <input type="hidden" id="food-id">
+
+            <label>Tên món ăn
+                <input id="food-name" required>
+            </label>
+
+            <label>Mô tả
+                <input id="food-description">
+            </label>
+
+            <label>Giá tiền (VNĐ)
+                <input id="food-price" type="number" min="0" required>
+            </label>
+
+            <label>Danh mục
+                <input id="food-category">
+            </label>
+
+            <label>Đường dẫn hình ảnh
+                <input id="food-image">
+            </label>
+
+            <label>
+                <input id="food-available" type="checkbox" checked>
+                Đang bán
+            </label>
+
+            <button class="btn" type="submit" id="food-submit">
+                Thêm món ăn
+            </button>
+
+            <button class="btn secondary" type="button" id="food-cancel">
+                Làm mới
+            </button>
+
+            <p id="food-message" class="message"></p>
+        </form>
+
+        <div id="admin-food-list">
+            <p class="empty">Đang tải món ăn...</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <h2>Quản lý đơn hàng</h2>
+
+        <div id="admin-order-list">
+            <p class="empty">Đang tải đơn hàng...</p>
+        </div>
+    </section>
+</main>
+
+<footer>© 2026 Foodie - Admin</footer>
+
+<script src="js/api.js"></script>
+<script src="js/common.js"></script>
+<script src="js/admin.js"></script>
+
+</body>
+</html>
+
